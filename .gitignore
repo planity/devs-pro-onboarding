@@ -1,0 +1,9 @@
+.DS_STORE
+node_modules
+*.log
+*.pid
+tmp
+dist
+lib
+.env.json
+.idea
