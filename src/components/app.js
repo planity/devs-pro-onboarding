@@ -1,34 +1,19 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Global } from '@emotion/react';
-import { colors, fontWeights } from 'config/styles';
+import { browserHistory, IndexRoute, Route, Router } from 'react-router';
+import Layout from './layout';
+import Landing from './landing';
+import Todos from './todos';
 
 export default function App({ store }) {
 	return (
 		<Provider store={store}>
-			<div>
-				<Global styles={styles.global} />
-				<h1 css={styles.title}>Welcome to Planity !</h1>
-			</div>
+			<Router history={browserHistory}>
+				<Route path={'/'} component={Layout}>
+					<IndexRoute component={Landing} />
+					<Route path={'todos'} component={Todos} />
+				</Route>
+			</Router>
 		</Provider>
 	);
 }
-
-const styles = {
-	global: {
-		'*, *:before, *:after': {
-			boxSizing: 'border-box'
-		},
-		'body': {
-			fontFamily: 'Open Sans, sans-serif'
-		}
-	},
-	title: {
-		'margin': 10,
-		'color': colors.green500,
-		'fontWeight': fontWeights.bold,
-		'@media (min-width: 500px)': {
-			color: 'red'
-		}
-	}
-};
