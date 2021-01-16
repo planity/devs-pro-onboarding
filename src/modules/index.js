@@ -1,6 +1,6 @@
-export default function(state = {}, action) {
-	return {
-		...state,
-		...action.payload
-	};
-}
+import { combineReducers } from 'redux';
+import todos from './todos';
+
+export default combineReducers({
+	todos
+});

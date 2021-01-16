@@ -1,19 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getUncompletedTodosCount } from 'modules/todos';
 import { Global } from '@emotion/react';
 import { Link } from 'react-router';
 
-export default function Layout({ children }) {
+export default connect(state => ({
+	todosCount: getUncompletedTodosCount(state)
+}))(function Layout({ children, todosCount }) {
 	return (
 		<div>
 			<Global styles={styles.global} />
 			<nav css={styles.nav}>
 				<Link to={'/'}>Home</Link>
-				<Link to={'/todos'}>Todos</Link>
+				<Link to={'/todos'}>Todos ({todosCount})</Link>
 			</nav>
 			{children}
 		</div>
 	);
-}
+});
 
 const styles = {
 	global: {
