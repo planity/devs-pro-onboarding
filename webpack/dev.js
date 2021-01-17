@@ -1,5 +1,6 @@
 'use strict';
 
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -26,5 +27,10 @@ module.exports = {
 				use: ['babel-loader']
 			}
 		]
-	}
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.PLANITY_UID': JSON.stringify(process.env.PLANITY_UID)
+		})
+	]
 };

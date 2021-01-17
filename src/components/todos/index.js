@@ -1,13 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getTodos, userToggledTodo } from 'modules/todos';
+import { getTodos, getTodosHaveLoaded, userToggledTodo } from 'modules/todos';
 
 export default connect(
 	state => ({
-		todos: getTodos(state)
+		todos: getTodos(state),
+		todosHaveLoaded: getTodosHaveLoaded(state)
 	}),
 	{ userToggledTodo }
-)(function Todos({ todos, userToggledTodo }) {
+)(function Todos({ todos, todosHaveLoaded, userToggledTodo }) {
+	if (!todosHaveLoaded) {
+		return <p>…</p>;
+	}
 	return (
 		<ul>
 			{todos

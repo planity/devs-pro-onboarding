@@ -1,29 +1,17 @@
 import { fromJS, Map } from 'immutable';
 
 const INITIAL_STATE = fromJS({
-	status: 'loaded',
-	todos: {
-		id1: {
-			title: 'Todo 1',
-			completed: true,
-			sort: 1
-		},
-		id3: {
-			title: 'Todo 3',
-			completed: false,
-			sort: 3
-		},
-		id2: {
-			title: 'Todo 2',
-			completed: false,
-			sort: 2
-		}
-	},
+	status: 'loading',
+	todos: {},
 	linkIsHighlighted: false
 });
 
 export default function todosReducer(state = INITIAL_STATE, action) {
 	switch (action.type) {
+		case TODOS_HAVE_LOADED:
+			return state
+				.set('status', 'loaded')
+				.set('todos', fromJS(action.payload.todos || {}));
 		case USER_TOGGLED_TODO:
 			return state.updateIn(
 				['todos', action.payload.todoId, 'completed'],
@@ -73,3 +61,14 @@ export const todosLinkShouldNotBeHighlighted = () => ({
 export function getTodosLinkIsHighlighted(state) {
 	return state.todos.get('linkIsHighlighted');
 }
+
+export function getTodosHaveLoaded(state) {
+	return state.todos.get('status') === 'loaded';
+}
+
+export const TODOS_HAVE_LOADED = 'TODOS_HAVE_LOADED';
+
+export const todosHaveLoaded = todos => ({
+	type: TODOS_HAVE_LOADED,
+	payload: { todos }
+});
