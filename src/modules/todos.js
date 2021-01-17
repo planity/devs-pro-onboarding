@@ -18,7 +18,8 @@ const INITIAL_STATE = fromJS({
 			completed: false,
 			sort: 2
 		}
-	}
+	},
+	linkIsHighlighted: false
 });
 
 export default function todosReducer(state = INITIAL_STATE, action) {
@@ -28,6 +29,10 @@ export default function todosReducer(state = INITIAL_STATE, action) {
 				['todos', action.payload.todoId, 'completed'],
 				completed => !completed
 			);
+		case TODOS_LINK_SHOULD_BE_HIGHLIGHTED:
+			return state.set('linkIsHighlighted', true);
+		case TODOS_LINK_SHOULD_NOT_BE_HIGHLIGHTED:
+			return state.set('linkIsHighlighted', false);
 		default:
 			return state;
 	}
@@ -50,3 +55,21 @@ export const userToggledTodo = todoId => ({
 	type: USER_TOGGLED_TODO,
 	payload: { todoId }
 });
+
+export const TODOS_LINK_SHOULD_BE_HIGHLIGHTED =
+	'TODOS_LINK_SHOULD_BE_HIGHLIGHTED';
+
+export const todosLinkShouldBeHighlighted = () => ({
+	type: TODOS_LINK_SHOULD_BE_HIGHLIGHTED
+});
+
+export const TODOS_LINK_SHOULD_NOT_BE_HIGHLIGHTED =
+	'TODOS_LINK_SHOULD_NOT_BE_HIGHLIGHTED';
+
+export const todosLinkShouldNotBeHighlighted = () => ({
+	type: TODOS_LINK_SHOULD_NOT_BE_HIGHLIGHTED
+});
+
+export function getTodosLinkIsHighlighted(state) {
+	return state.todos.get('linkIsHighlighted');
+}

@@ -1,9 +1,6 @@
-import { select, take } from 'redux-saga/effects';
+import { fork } from 'redux-saga/effects';
+import todosHighlighting from './todos_highlighting';
 
 export default function*() {
-	while (true) {
-		yield take('*');
-		const state = yield select();
-		console.log(state);
-	}
+	yield fork(todosHighlighting);
 }

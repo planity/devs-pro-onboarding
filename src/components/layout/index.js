@@ -1,18 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUncompletedTodosCount } from 'modules/todos';
+import {
+	getUncompletedTodosCount,
+	getTodosLinkIsHighlighted
+} from 'modules/todos';
 import { Global } from '@emotion/react';
 import { Link } from 'react-router';
 
 export default connect(state => ({
-	todosCount: getUncompletedTodosCount(state)
-}))(function Layout({ children, todosCount }) {
+	todosCount: getUncompletedTodosCount(state),
+	highlightTodos: getTodosLinkIsHighlighted(state)
+}))(function Layout({ children, todosCount, highlightTodos }) {
 	return (
 		<div>
 			<Global styles={styles.global} />
 			<nav css={styles.nav}>
 				<Link to={'/'}>Home</Link>
-				<Link to={'/todos'}>Todos ({todosCount})</Link>
+				<Link to={'/todos'} style={highlightTodos ? styles.highlighted : {}}>
+					Todos ({todosCount})
+				</Link>
 			</nav>
 			{children}
 		</div>
@@ -39,5 +45,8 @@ const styles = {
 				textDecoration: 'underline'
 			}
 		}
+	},
+	highlighted: {
+		color: 'red'
 	}
 };
