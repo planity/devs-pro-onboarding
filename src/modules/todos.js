@@ -12,11 +12,6 @@ export default function todosReducer(state = INITIAL_STATE, action) {
 			return state
 				.set('status', 'loaded')
 				.set('todos', fromJS(action.payload.todos || {}));
-		case USER_TOGGLED_TODO:
-			return state.updateIn(
-				['todos', action.payload.todoId, 'completed'],
-				completed => !completed
-			);
 		case TODOS_LINK_SHOULD_BE_HIGHLIGHTED:
 			return state.set('linkIsHighlighted', true);
 		case TODOS_LINK_SHOULD_NOT_BE_HIGHLIGHTED:

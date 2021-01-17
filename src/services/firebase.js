@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import 'firebase/database';
 
 firebase.initializeApp({
@@ -12,6 +13,8 @@ firebase.initializeApp({
 	appId: '1:752495775440:web:232c5fcc6fb5560f5f58d5',
 	measurementId: 'G-YGRBM0NLEL'
 });
+
+window.auth = firebase.auth();
 
 export async function fetchNode(node) {
 	const snapshot = await firebase
@@ -33,4 +36,11 @@ export function unwatchNode(node, listener) {
 		.database()
 		.ref(node)
 		.off('value', listener);
+}
+
+export function setNode(node, value) {
+	return firebase
+		.database()
+		.ref(node)
+		.set(value);
 }

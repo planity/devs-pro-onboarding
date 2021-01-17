@@ -2,17 +2,13 @@ import { delay, takeLatest } from 'redux-saga';
 import { fork, put, select, take } from 'redux-saga/effects';
 import {
 	getTodos,
-	USER_TOGGLED_TODO,
 	TODOS_HAVE_LOADED,
 	todosLinkShouldBeHighlighted,
 	todosLinkShouldNotBeHighlighted
 } from 'modules/todos';
 
 export default function* todosHighlightingSideEffects() {
-	yield takeLatest(
-		[USER_TOGGLED_TODO, 'TODO_WAS_REMOTELY_COMPLETED'],
-		highlightTodosMenu
-	);
+	yield takeLatest('TODO_WAS_REMOTELY_COMPLETED', highlightTodosMenu);
 	yield fork(detectDistantCompletions);
 }
 
